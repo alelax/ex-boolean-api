@@ -25,7 +25,9 @@ class StudentController extends Controller
             'age' => $student['age'],
             'gender' => $student['gender'],
             'course' => $student['course']['title']
-        ]
+        ];
+
+        return response()->json($student_detail);
         
     }
 }
