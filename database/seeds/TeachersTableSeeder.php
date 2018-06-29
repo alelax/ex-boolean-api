@@ -16,11 +16,7 @@ class TeachersTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();
-
-        $fake_name = $faker->name;      
-
-        /* dd($fake_name); */
+        $faker = Faker\Factory::create();        
 
         $gender_generator = ['male', 'female'];
         
