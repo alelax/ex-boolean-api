@@ -13,9 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/insegnanti', 'Api\TeacherController@index');
-Route::get('/corsi', 'Api\CourseController@index');
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/insegnanti', 'Api\TeacherController@index');
+
+Route::get('/studenti', 'Api\StudentController@index');
+Route::get('/studenti/{id}', 'Api\StudentController@showStudent');
+
+
+Route::get('/corsi', 'Api\CourseController@index');
+Route::get('/corsi/{id}', 'Api\CourseController@showCourse');
+
+
