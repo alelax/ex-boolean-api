@@ -20,7 +20,7 @@ class CreateStudentsTable extends Migration
             $table->smallInteger('age')->nullable($value = false);
             $table->string('address', 100)->nullable($value = false);
             $table->string('gender', 6)->nullable($value = false);
-            $table->integer('course_id')->unsigned();
+            $table->integer('course_id')->unsigned()->nullable();
 
             $table->foreign('course_id')->references('id')->on('courses');
 

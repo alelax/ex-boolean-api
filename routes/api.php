@@ -21,8 +21,13 @@ Route::get('/insegnanti', 'Api\TeacherController@index');
 Route::get('/insegnanti/{id}', 'Api\TeacherController@showTeacher');
 
 
+
+
 Route::get('/studenti', 'Api\StudentController@index');
 Route::get('/studenti/{id}', 'Api\StudentController@showStudent');
+
+Route::post('/studente', 'Api\StudentController@addStudent');
+
 
 
 Route::get('/corsi', 'Api\CourseController@index');
