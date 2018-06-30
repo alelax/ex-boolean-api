@@ -108,4 +108,84 @@ class StudentController extends Controller
             ]);
         }     
     }
+
+    public function delete($id)
+    {
+        $t = Student::find($id);
+        $status = "";
+        $message = "";
+
+        if ( is_null($t)) {
+            $status = "failed";
+            $message = "This id does not exist";
+        } else {
+            $t->delete();
+            $status = "ok";
+            $message = "This student has been deleted";
+            
+        }
+
+        return response()->json([
+            "status" => $status,
+            "message" => $message
+        ]);
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $data = $request->all();
+        $error_message = "";
+        $isThere_an_error = false;
+
+        if ( empty($data['name']) ) {
+            $error_message .= "Nome mancante, ";
+            $isThere_an_error = true;
+        }
+        if ( empty($data['surname']) ) {
+            $error_message .= "Cognome mancante, ";
+            $isThere_an_error = true;
+
+        }
+        if ( empty($data['age']) ) {
+            $error_message .= "Età mancante, ";
+            $isThere_an_error = true;
+        }
+        if ( empty($data['address']) ) {
+            $error_message .= "Indirizzo mancante, ";
+            $isThere_an_error = true;
+        }
+        if ( empty($data['gender']) ) {
+            $error_message .= "Genere mancante, ";
+            $isThere_an_error = true;
+        }
+        if ( !empty($data['course_id']) ) {
+            
+            $error_message .= "Genere mancante, ";
+            $isThere_an_error = true;
+        }
+  
+        if ( $isThere_an_error ) {
+            return response()->json([
+                "success" => false,
+                "log" => $error_message
+            ]);
+        } else {
+            $existing_teacher = Teacher::find($id);
+            $existing_teacher->fill($data);
+           
+            $existing_teacher->save();
+            
+            return response()->json([
+                "success" => true,
+                "log" => "Data added correctely",
+                "data" => [
+                    "name" =>  $existing_teacher->name,
+                    "surname" => $existing_teacher->surname,
+                    "age" => $existing_teacher->age,
+                    "address" => $existing_teacher->address,
+                    "gender" => $existing_teacher->gender,                    
+                ]
+            ]);
+        }     
+    }
 }
