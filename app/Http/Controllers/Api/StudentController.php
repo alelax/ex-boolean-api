@@ -144,7 +144,6 @@ class StudentController extends Controller
         if ( empty($data['surname']) ) {
             $error_message .= "Cognome mancante, ";
             $isThere_an_error = true;
-
         }
         if ( empty($data['age']) ) {
             $error_message .= "Età mancante, ";
@@ -158,11 +157,7 @@ class StudentController extends Controller
             $error_message .= "Genere mancante, ";
             $isThere_an_error = true;
         }
-        if ( !empty($data['course_id']) ) {
-            
-            $error_message .= "Genere mancante, ";
-            $isThere_an_error = true;
-        }
+        
   
         if ( $isThere_an_error ) {
             return response()->json([
@@ -170,20 +165,28 @@ class StudentController extends Controller
                 "log" => $error_message
             ]);
         } else {
-            $existing_teacher = Teacher::find($id);
-            $existing_teacher->fill($data);
+            $existing_student = Student::find($id);
+
+            if ( empty($existing_student) ) {
+               return response()->json([
+                    "success" => false,
+                    "log" => "Lo studente inserito non esiste"
+                ]); 
+            }
+
+            $existing_student->fill($data);
            
-            $existing_teacher->save();
+            $existing_student->save();
             
             return response()->json([
                 "success" => true,
                 "log" => "Data added correctely",
                 "data" => [
-                    "name" =>  $existing_teacher->name,
-                    "surname" => $existing_teacher->surname,
-                    "age" => $existing_teacher->age,
-                    "address" => $existing_teacher->address,
-                    "gender" => $existing_teacher->gender,                    
+                    "name" =>  $existing_student->name,
+                    "surname" => $existing_student->surname,
+                    "age" => $existing_student->age,
+                    "address" => $existing_student->address,
+                    "gender" => $existing_student->gender,                    
                 ]
             ]);
         }     
